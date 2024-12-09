@@ -150,14 +150,17 @@ fun main() {
 //                println()
 //            }
 //            println()
+            val turnPositions = mutableListOf<Pair<Int,Int>>()
             var hitOMoreThanOnce = 0
             //println("TESTING POSITION: ${position.first} ${position.second}")
-            while(pos_i in 1 until arr2D.lastIndex && pos_j in 1 until arr2D[0].lastIndex && hitOMoreThanOnce < 2) {
+            while(pos_i in 1 until arr2D.lastIndex && pos_j in 1 until arr2D[0].lastIndex && hitOMoreThanOnce < patrolPositions.size) {
                 //println("i $pos_i ${pos_i in 1 until arr2D.lastIndex} j $pos_j ${pos_j in 1 until arr2D[0].lastIndex} moreThanone $hitOMoreThanOnce O_pos ${position.first} ${position.second}")
                 when (direction) {
                     '^' -> {
                         if (arr2D[pos_i - 1][pos_j] == '#' || arr2D[pos_i - 1][pos_j] == 'O') {
-                            if (arr2D[pos_i - 1][pos_j] == 'O') {
+                            if (Pair(pos_i, pos_j) !in turnPositions) {
+                                turnPositions.add(Pair(pos_i, pos_j))
+                            } else {
                                 hitOMoreThanOnce += 1
                             }
                             direction = '>'
@@ -170,7 +173,9 @@ fun main() {
 
                     '>' -> {
                         if (arr2D[pos_i][pos_j + 1] == '#' || arr2D[pos_i][pos_j + 1] == 'O') {
-                            if (arr2D[pos_i][pos_j + 1] == 'O') {
+                            if (Pair(pos_i, pos_j) !in turnPositions) {
+                                turnPositions.add(Pair(pos_i, pos_j))
+                            } else {
                                 hitOMoreThanOnce += 1
                             }
                             direction = 'v'
@@ -183,7 +188,9 @@ fun main() {
 
                     'v' -> {
                         if (arr2D[pos_i + 1][pos_j] == '#' || arr2D[pos_i + 1][pos_j] == 'O') {
-                            if (arr2D[pos_i + 1][pos_j] == 'O') {
+                            if (Pair(pos_i, pos_j) !in turnPositions) {
+                                turnPositions.add(Pair(pos_i, pos_j))
+                            } else {
                                 hitOMoreThanOnce += 1
                             }
                             direction = '<'
@@ -196,7 +203,9 @@ fun main() {
 
                     '<' -> {
                         if (arr2D[pos_i][pos_j - 1] == '#' || arr2D[pos_i][pos_j - 1] == 'O') {
-                            if (arr2D[pos_i][pos_j - 1] == 'O') {
+                            if (Pair(pos_i, pos_j) !in turnPositions) {
+                                turnPositions.add(Pair(pos_i, pos_j))
+                            } else {
                                 hitOMoreThanOnce += 1
                             }
                             direction = '^'
@@ -216,7 +225,7 @@ fun main() {
 //                println()
             }
 //            println("i $pos_i ${pos_i in 1 until arr2D.lastIndex} j $pos_j ${pos_j in 1 until arr2D[0].lastIndex} moreThanone $hitOMoreThanOnce")
-            if(hitOMoreThanOnce > 1) {
+            if(hitOMoreThanOnce > turnPositions.size) {
                 loopCount += 1
 //                for(i in input.indices) {
 //                    for(j in input[i].indices) {
