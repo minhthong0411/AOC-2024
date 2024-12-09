@@ -128,7 +128,7 @@ fun main() {
 //                }
 //            }
 //        }
-        patrolPositions = listOf(Pair(24,56))
+        //patrolPositions = listOf(Pair(24,56))
         //println(patrolPositions.size)
         for(i in input.indices) {
             for(j in input[i].indices) {
@@ -143,15 +143,15 @@ fun main() {
             arr2D[position.first][position.second] = 'O'
             pos_i = start_i
             pos_j = start_j
-            for(i in input.indices) {
-                for(j in input[i].indices) {
-                    print(arr2D[i][j])
-                }
-                println()
-            }
-            println()
+//            for(i in input.indices) {
+//                for(j in input[i].indices) {
+//                    print(arr2D[i][j])
+//                }
+//                println()
+//            }
+//            println()
             var hitOMoreThanOnce = 0
-            println("TESTING POSITION: ${position.first} ${position.second}")
+            //println("TESTING POSITION: ${position.first} ${position.second}")
             while(pos_i in 1 until arr2D.lastIndex && pos_j in 1 until arr2D[0].lastIndex && hitOMoreThanOnce < 2) {
                 //println("i $pos_i ${pos_i in 1 until arr2D.lastIndex} j $pos_j ${pos_j in 1 until arr2D[0].lastIndex} moreThanone $hitOMoreThanOnce O_pos ${position.first} ${position.second}")
                 when (direction) {
