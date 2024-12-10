@@ -2,16 +2,16 @@ import java.util.Collections.emptyList
 import kotlin.math.abs
 
 fun main() {
-    fun String.toDiskBlock(): String {
-        var block = ""
+    fun String.toDiskBlock(): MutableList<Int> {
+        var block = mutableListOf<Int>()
         var mode = 1
         var count = 0
         for(ch in this) {
             for(i in 0 until ch.digitToInt()) {
-                block += if (mode % 2 == 1) {
-                    (count % 10).digitToChar()
+                if (mode % 2 == 1) {
+                    block.add(count)
                 } else {
-                    '.'
+                    block.add(-1)
                 }
             }
             mode += 1
@@ -19,37 +19,36 @@ fun main() {
         }
         return block
     }
-    fun String.defragment(): String {
-        val block = StringBuilder(this)
+    fun MutableList<Int>.defragment(): MutableList<Int> {
+        val block = this
         var i = 0
         var j = this.lastIndex
         while(i < j) {
-            if(block[i] == '.') {
+            if(block[i] == -1) {
                 block[i] = block[j]
-                block[j] = '.'
-                --j
-                while(block[j] == '.') {
+                block[j] = -1
+                while(block[j] == -1) {
                     --j
                 }
             }
             ++i
         }
-        return block.toString()
+        return block
     }
-    fun String.checkSum(): Int {
-        var result = 0
+    fun MutableList<Int>.checkSum(): ULong {
+        var result = 0uL
         forEachIndexed { index, c ->
-            if(c != '.') {
-                result += (index * c.digitToInt())
+            if(c != -1) {
+                result += (index.toULong() * c.toULong())
             }
         }
         return result
     }
-    fun part1(input: List<String>): Int {
-        var result = 0;
+    fun part1(input: List<String>): ULong {
+        var result = 0uL;
         for(diskMap in input) {
-            println(diskMap.toDiskBlock())
-            println(diskMap.toDiskBlock().defragment())
+            //println(diskMap.toDiskBlock())
+            //println(diskMap.toDiskBlock().defragment())
             result = diskMap.toDiskBlock().defragment().checkSum()
         }
         return result
